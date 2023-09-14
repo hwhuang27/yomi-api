@@ -9,7 +9,6 @@ const compression = require('compression');
 const helmet = require('helmet');
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api');
 
 // database
@@ -41,8 +40,7 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
-app.use('/', indexRouter);
-app.use('/bookshelf/api', apiRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

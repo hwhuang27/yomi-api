@@ -1,8 +1,9 @@
 # Bookshelf API
 
-RESTful API to keep track of your books. 
+Backend API for serving the bookshelf client.
 
 Created with [Express](https://expressjs.com/) and [MongoDB](https://www.mongodb.com/).
 
-Authentication implemented with [PassportJS](https://www.passportjs.org/) and [bcryptjs](https://www.npmjs.com/package/bcryptjs).
+Local and JWT authentication implemented with [PassportJS](https://www.passportjs.org/).
 
+Deployed with [Railway](https://railway.app/).
