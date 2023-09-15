@@ -1,38 +1,37 @@
-const bcrypt = require("bcryptjs");
 const passport = require("passport");
-const session = require("express-session");
-const LocalStrategy = require("passport-local").Strategy;
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const User = require("../models/user");
 
-// authentication middleware
-passport.use(
-    new LocalStrategy(async (username, password, done) => {
-        try {
-            const user = await User.findOne({ username: username });
-            if (!user) {
-                return done(null, false, { message: "Incorrect username" });
-            };
-            const match = await bcrypt.compare(password, user.password);
-            if (!match) {
-                // passwords do not match
-                return done(null, false, { message: "Incorrect password" });
-            };
-            return done(null, user);
-        } catch (err) {
-            return done(err);
-        };
-    })
-);
-
-passport.serializeUser(function (user, done) {
-    done(null, user.id);
-});
-
-passport.deserializeUser(async function (id, done) {
+exports.login = async function (req, res, next){
     try {
-        const user = await User.findById(id);
-        done(null, user);
+        passport.authenticate('local', {session: false}, (err, user, info) => {
+            // user not found -> return 403
+            if( err || !user){
+                return res.status(403).json({
+                    info,
+                });
+            }
+            // user found -> login & create jwt
+            req.login(user, {session: false}, (err) => {
+                if(err){
+                    next(err);
+                }
+                // create token
+                const body = { _id: user._id, username: user.username };
+                const token = jwt.sign(body, process.env.SECRET_KEY, {expiresIn: '1d'});
+                
+                return res.status(200).json({ body, token });
+            });
+        }) (req, res, next);
     } catch (err) {
-        done(err);
-    };
-});
+        res.status(403).json({
+            err,
+        })
+    }
+};
 
+exports.register = async function(req, res, next){
+
+    return res.status(200).json({ message: 'New user registered'});
+};
