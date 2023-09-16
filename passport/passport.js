@@ -24,21 +24,22 @@ passport.use(
     })
 );
 
+
 let options = {};
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 options.secretOrKey = process.env.SECRET_KEY;
 
 passport.use(
-    new JwtStrategy(options, (jwtPayload, done) => {
-        User.findOne({ username: jwtPayload.body.username }, (err, user) => {
-            if (err){
-                return done(err, false);
-            }
+    new JwtStrategy(options, async (jwtPayload, done) => {
+        try {
+            let user = await User.findOne({ username: jwtPayload.username });
             if (user){
-                return done(null, user);
+                return done(null, jwtPayload);
             } else {
                 return done(null, false);
             }
-        });
-    }
-));
+        } catch (err) {
+            return done(err, false);
+        };
+    })
+);
