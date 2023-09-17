@@ -3,26 +3,24 @@ var router = express.Router();
 const passport = require("passport");
 
 const authController = require("../controllers/authController");
-const userController = require("../controllers/userController");
+const bookController = require("../controllers/bookController");
 
 // AUTHENTICATION CONTROLLER
 router.post('/register', authController.register);
 router.post('/login', authController.login);
-// note: Logout route not needed because of JWT authentication
+// logout route - clear localstorage?
 
-// USER CONTROLLER
-router.get('/user/test', passport.authenticate('jwt', { session: false }), userController.test);
+// BOOK CONTROLLER
+// GET all User books
+router.get('/books', passport.authenticate('jwt', {session: false}), bookController.get_books);
 
-// GET all user books - limit to 10?
-router.get('/user/:username', passport.authenticate('jwt', {session: false}), userController.get_books);
+// POST create new Book for User
+router.post('/book', passport.authenticate('jwt', { session: false }), bookController.create_book);
 
-// POST create new user book
-router.post('/user/:username/book', passport.authenticate('jwt', { session: false }), userController.create_book);
+// PUT update existing Book for User
+router.put('/book/:bookId', passport.authenticate('jwt', { session: false }), bookController.update_book);
 
-// PUT update user book
-router.put('/user/:username/book/:bookId', passport.authenticate('jwt', { session: false }), userController.update_book);
-
-// DELETE delete user book
-router.delete('/user/:username/book/:bookId', passport.authenticate('jwt', { session: false }), userController.delete_book);
+// DELETE delete existing Book for User
+router.delete('/book/:bookId', passport.authenticate('jwt', { session: false }), bookController.delete_book);
 
 module.exports = router;
