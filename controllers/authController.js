@@ -42,51 +42,49 @@ exports.register = [
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("First name must be specified.")
-        .isAlphanumeric()
-        .withMessage("First name has non-alphanumeric characters."),
+        .withMessage("First name must be specified."),
     body("last_name")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("Last name must be specified.")
-        .isAlphanumeric()
-        .withMessage("Last name has non-alphanumeric characters."),
+        .withMessage("Last name must be specified."),
     body("username")
         .trim()
-        .isLength({ min: 1 })
+        .isLength({ min: 2 })
         .escape()
         .withMessage("Username must be specified.")
-        .isAlphanumeric()
-        .withMessage("Username has non-alphanumeric characters."),
-    // [add a custom validator to check database if user exists HERE]
+        .custom(async (value) => {
+            const user = await User.findOne({username: value});
+            if(user){
+                throw new Error('Username is already in use');
+            }
+        }),
     body("password")
         .trim()
-        .isLength({ min: 1 })
+        .isLength({ min: 6 })
+        .withMessage('Password must be at least 6 characters.')
         .escape()
         .withMessage("Password must be specified."),
     body('confirm-password').custom((value, { req }) => {
         return value === req.body.password;
     }),
-    // Process request after validation and sanitization.
+    // Process request after validation and sanitization
     asyncHandler(async (req, res, next) => {
-        // Extract the validation errors from a request.
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            // There are errors. Render form again with sanitized values/errors messages.
-            res.render("signup", {
-                title: 'Register',
-                heading: 'Sign Up',
+            res.status(400).json({
+                message: 'Error when registering',
+                username: req.body.username,
                 errors: errors.array(),
             });
-            return;
+            // return;
         } else {
             bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
                 if (err) {
                     throw new Error("Password failed to hash.");
                 }
-                // Create User object with escaped and trimmed data
+
                 const user = new User({
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
@@ -94,10 +92,13 @@ exports.register = [
                     password: hashedPassword,
                 });
                 const result = await user.save();
-                res.redirect("/");
+
+                res.status(200).json({
+                    message: `User created successfully.`,
+                    user,
+                })
             });
         }
     }),
-    // next 
 ]
 
