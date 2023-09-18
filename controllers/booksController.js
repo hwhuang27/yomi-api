@@ -77,7 +77,7 @@ exports.update_book = [
                 errors: errors.array(),
             });
         } else {
-            // check if the correct user is editing the book
+            // check if the correct user is trying to edit this book
             const book = await Book.findById(req.params.bookId);
             if(book.user.toString() !== req.user._id){
                 res.status(403).json({
@@ -105,7 +105,19 @@ exports.update_book = [
 ]
 
 exports.delete_book = asyncHandler(async (req, res, next) => {
-    return res.status(200).json({
-        message: `DELETE: protected route accessed.`,
-    });
+    
+    // check if the correct user is trying to delete this book
+    const book = await Book.findById(req.params.bookId);
+    if (book.user.toString() !== req.user._id) {
+        res.status(403).json({
+            message: `User not authorized to delete this book`,
+        });
+    } else {
+        await book.deleteOne();
+
+        res.status(200).json({
+            message: `Book deleted successfully from user: ${req.user.username}`,
+            bookId: req.params.bookId,
+        });
+    }
 });
