@@ -6,7 +6,6 @@ const { body, validationResult } = require('express-validator')
 exports.get_books = asyncHandler(async (req, res, next) => {
     
     const books = await Book.find({ user: req.user._id }).sort({ date_added: -1 });
-    
     return res.status(200).json({
         message: `GET books from user: ${req.user.username}`,
         books,

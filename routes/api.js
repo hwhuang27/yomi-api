@@ -11,6 +11,7 @@ router.post('/login', authController.login);
 // logout route - clear localstorage?
 
 // BOOK CONTROLLER
+
 // GET all User books
 router.get('/books', passport.authenticate('jwt', {session: false}), booksController.get_books);
 
