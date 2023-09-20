@@ -26,7 +26,7 @@ var app = express();
 
 // middleware
 let corsOptions = {
-    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://bookshelf-client-eight.vercel.app/'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://bookshelf-client-eight.vercel.app'],
     optionsSuccessStatus: 200
 }
 app.use(helmet());
