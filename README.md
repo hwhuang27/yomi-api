@@ -1,9 +1,14 @@
 # Bookshelf API
 
-Backend API for serving the bookshelf client.
+Backend REST API for serving the [bookshelf-client](https://github.com/hwhuang27/bookshelf-client).
 
-Created with [Express](https://expressjs.com/) and [MongoDB](https://www.mongodb.com/).
 
-Local and JWT authentication implemented with [PassportJS](https://www.passportjs.org/).
+## Built with...
 
-Deployed with [Railway](https://railway.app/).
+- [NodeJS](https://nodejs.org/en) and [Express](https://expressjs.com/)
+
+- [MongoDB](https://www.mongodb.com/) for database
+
+- [PassportJS](https://www.passportjs.org/) for local & JWT authentication
+
+- [Railway](https://railway.app/) for deployment
