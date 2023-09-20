@@ -95,6 +95,7 @@ exports.register = [
                 res.status(200).json({
                     message: `User created successfully.`,
                     user,
+                    first_name,
                 })
             });
         }
