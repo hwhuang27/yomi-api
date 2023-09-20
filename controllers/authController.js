@@ -64,7 +64,7 @@ exports.register = [
         .isLength({ min: 6 })
         .withMessage('Password must be at least 6 characters.')
         .escape(),
-    body('confirm-password').custom((value, { req }) => {
+    body('confirm_password').custom((value, { req }) => {
         return value === req.body.password;
     }),
     // Process request after validation and sanitization
