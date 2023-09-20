@@ -20,7 +20,7 @@ exports.login = async function (req, res, next){
                     next(err);
                 }
                 // create token
-                const body = { _id: user._id, username: user.username };
+                const body = { _id: user._id, username: user.username};
                 const token = jwt.sign(body, process.env.SECRET_KEY, {expiresIn: '1h'});
                 
                 return res.status(200).json({ body, token });
@@ -95,7 +95,6 @@ exports.register = [
                 res.status(200).json({
                     message: `User created successfully.`,
                     user,
-                    first_name,
                 })
             });
         }
