@@ -50,7 +50,7 @@ exports.register = [
         .withMessage("Last name must be specified."),
     body("username")
         .trim()
-        .isLength({ min: 2 })
+        .isLength({ min: 1 })
         .escape()
         .withMessage("Username must be specified.")
         .custom(async (value) => {
@@ -61,8 +61,8 @@ exports.register = [
         }),
     body("password")
         .trim()
-        .isLength({ min: 6 })
-        .withMessage('Password must be at least 6 characters.')
+        .isLength({ min: 1 })
+        .withMessage('Password must be specified.')
         .escape(),
     body('confirm_password').custom((value, { req }) => {
         return value === req.body.password;
