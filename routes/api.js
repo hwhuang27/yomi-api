@@ -8,7 +8,7 @@ const booksController = require("../controllers/booksController");
 // AUTHENTICATION CONTROLLER
 router.post('/register', authController.register);
 router.post('/login', authController.login);
-// logout route - clear localstorage?
+router.post('/verify', authController.verify);
 
 // BOOK CONTROLLER
 

@@ -5,6 +5,15 @@ const User = require("../models/user");
 const { body, validationResult } = require('express-validator')
 const asyncHandler = require('express-async-handler');
 
+exports.verify = asyncHandler(async (req, res, next) => {
+    jwt.verify(req.body.token, process.env.SECRET_KEY, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: '403 Unauthorized' })
+        }
+        return res.status(200).json({ message: 'verified', decoded });
+    });
+})
+
 exports.login = async function (req, res, next){
     try {
         passport.authenticate('local', {session: false}, (err, user, info) => {
@@ -21,7 +30,7 @@ exports.login = async function (req, res, next){
                 }
                 // create token
                 const body = { _id: user._id, username: user.username};
-                const token = jwt.sign(body, process.env.SECRET_KEY, {expiresIn: '1h'});
+                const token = jwt.sign(body, process.env.SECRET_KEY, {expiresIn: '15s'});
                 
                 return res.status(200).json({ body, token });
             });
@@ -31,9 +40,6 @@ exports.login = async function (req, res, next){
             err,
         })
     }
-};
-exports.register = async function (req, res, next) {
-    return res.status(200).json({ message: 'New user registered' });
 };
 
 exports.register = [
