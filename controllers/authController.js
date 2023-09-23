@@ -30,7 +30,7 @@ exports.login = async function (req, res, next){
                 }
                 // create token
                 const body = { _id: user._id, username: user.username};
-                const token = jwt.sign(body, process.env.SECRET_KEY, {expiresIn: '15s'});
+                const token = jwt.sign(body, process.env.SECRET_KEY, {expiresIn: '1d'});
                 
                 return res.status(200).json({ body, token });
             });
