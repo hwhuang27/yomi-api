@@ -15,7 +15,7 @@ exports.get_books = asyncHandler(async (req, res, next) => {
 
 // GET One Book
 exports.get_book = asyncHandler(async (req, res, next) => {
-    const book = await Book.find({ _id: req.params.bookId });
+    const book = await Book.findOne({ _id: req.params.bookId });
     return res.status(200).json({
         message: `GET book from user: ${req.user.username}`,
         book,
