@@ -3,12 +3,22 @@ const Book = require("../models/book");
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator')
 
+// GET All Books
 exports.get_books = asyncHandler(async (req, res, next) => {
     
     const books = await Book.find({ user: req.user._id }).sort({ date_added: -1 });
     return res.status(200).json({
         message: `GET books from user: ${req.user.username}`,
         books,
+    });
+});
+
+// GET One Book
+exports.get_book = asyncHandler(async (req, res, next) => {
+    const book = await Book.find({ _id: req.params.bookId });
+    return res.status(200).json({
+        message: `GET book from user: ${req.user.username}`,
+        book,
     });
 });
 

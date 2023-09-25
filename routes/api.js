@@ -18,6 +18,9 @@ router.get('/books', passport.authenticate('jwt', {session: false}), booksContro
 // POST create new Book for User
 router.post('/books', passport.authenticate('jwt', { session: false }), booksController.create_book);
 
+// GET one User book
+router.get('/books/:bookId', passport.authenticate('jwt', { session: false }), booksController.get_book);
+
 // PUT update existing Book for User
 router.put('/books/:bookId', passport.authenticate('jwt', { session: false }), booksController.update_book);
 
