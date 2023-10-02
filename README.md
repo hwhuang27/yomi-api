@@ -1,8 +1,15 @@
-# Bookshelf API
+# 📚 Bookshelf API 📚
 
 Backend REST API for serving the [bookshelf-client](https://github.com/hwhuang27/bookshelf-client).
 
-## Built with...
+## ✨ Features ✨
+
+- CRUD operations for managing books
+- Local & JWT Authentication for login and sessions
+- Password hashing with bcrypt
+- Form validation & sanitization
+
+## 🛠️ Built with... 🛠️
 
 - [NodeJS](https://nodejs.org/en) and [Express](https://expressjs.com/) for backend
 - [React](https://react.dev/) and [Vite](https://vitejs.dev/) for frontend
