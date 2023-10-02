@@ -2,6 +2,8 @@
 
 Backend REST API for serving the [bookshelf-client](https://github.com/hwhuang27/bookshelf-client).
 
+Live site can be found here: [Bookshelf](bookshelf-client-eight.vercel.app)
+
 ## ✨ Features ✨
 
 - CRUD operations for managing books
