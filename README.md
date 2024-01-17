@@ -1,8 +1,8 @@
-# 📚 Bookshelf API 📚
+# 📚 Yomi 📚
 
-Backend REST API for serving the [bookshelf-client](https://github.com/hwhuang27/bookshelf-client).
+Backend REST API for serving the [yomi-client](https://github.com/hwhuang27/yomi-client)
 
-Live site can be found here: [Bookshelf](https://bookshelf-client-eight.vercel.app/)
+Live site can be found here: [Yomi](https://bookshelf-client-eight.vercel.app/)
 
 ## ✨ Features ✨
 
